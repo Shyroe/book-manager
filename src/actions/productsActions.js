@@ -1,4 +1,12 @@
-import { ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_ERROR } from "../types";
+import {
+  ADD_PRODUCT,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_ERROR,
+  START_DOWNLOAD_PRODUCTS,
+  DOWNLOAD_PRODUCTS_SUCCESS,
+  DOWNLOAD_PRODDUCTS_ERROR
+} from "../types";
+
 import axiosClient from "../config/axios";
 
 // Create new product - main function
@@ -34,4 +42,34 @@ export const newProductSucces = product => ({
 
 export const newProductError = error => ({
   type: ADD_PRODUCT_ERROR
+});
+
+//Get the product list by fetching the API
+export function getProductsAction() {
+  return dispatch => {
+    dispatch(downloadProducts());
+
+    //Ask in the API
+    axiosClient
+      .get("./books")
+      .then(response => {
+        dispatch(downloadSucces(response.data));
+      })
+      .catch(error => {
+        dispatch(downloadFailure());
+      });
+  };
+}
+
+export const downloadProducts = () => ({
+  type: START_DOWNLOAD_PRODUCTS
+});
+
+export const downloadSucces = products => ({
+  type: DOWNLOAD_PRODUCTS_SUCCESS,
+  payload: products
+});
+
+export const downloadFailure = error => ({
+  type: DOWNLOAD_PRODDUCTS_ERROR
 });

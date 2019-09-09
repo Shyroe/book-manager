@@ -2,9 +2,15 @@ import React from "react";
 
 // Redux
 import { createNewProductAction } from "../actions/productsActions";
-import { useDispatch } from "react-redux";
+import {
+  validateFormAction,
+  validationError,
+  validationSuccess
+} from "../actions/actionsValidation";
+// useSelector is the tool that allows you to have access to your state in Redux
+import { useDispatch, useSelector } from "react-redux";
 
-const NewProduct = () => {
+const NewProduct = ({ history }) => {
   //State
   const [name, setName] = React.useState("");
   const [price, setPrice] = React.useState("");
@@ -12,17 +18,27 @@ const NewProduct = () => {
   //Create new product with Redux
   const dispatch = useDispatch();
   const addProduct = product => dispatch(createNewProductAction(product));
+  const formValidation = () => dispatch(validateFormAction());
+  const successValidation = () => dispatch(validationSuccess());
+  const failureValidation = () => dispatch(validationError());
+
+  //Getting the data from our global state
+  const error = useSelector(state => state.error.error);
 
   const handleSubmit = e => {
     e.preventDefault();
-    addProduct({ name, price });
-    // validate from
+    formValidation();
+    // validate form
     if (name.trim() === "" || price.trim() === "") {
-      console.log("ERROR YOU MUST TYPE SOMETHING");
+      failureValidation();
       return;
     }
+    //If it pass the validation
+    successValidation();
     // create new product
+    addProduct({ name, price });
     // redirect
+    history.push("/");
   };
 
   return (
@@ -61,6 +77,12 @@ const NewProduct = () => {
                 Add
               </button>
             </form>
+
+            {error ? (
+              <div className="font-weight-bold alert alert-danger text-center mt-4">
+                All fields are required
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

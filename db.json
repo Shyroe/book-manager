@@ -24,6 +24,11 @@
       "name": "Design Databases",
       "price": "45",
       "id": 5
+    },
+    {
+      "name": "Learning Ruby on Rails",
+      "price": "49",
+      "id": 6
     }
   ]
 }
