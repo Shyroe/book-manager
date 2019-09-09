@@ -6,9 +6,15 @@ export function createNewProductAction(product) {
   return dispatch => {
     // Here I call the function that allows me to create the "newProduct"
     dispatch(newProduct());
+    dispatch(newProductSucces(product));
   };
 }
 
 export const newProduct = () => ({
   type: ADD_PRODUCT
+});
+
+export const newProductSucces = product => ({
+  type: ADD_PRODUCT_SUCCESS,
+  payload: product
 });
