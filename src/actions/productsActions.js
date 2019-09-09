@@ -4,7 +4,10 @@ import {
   ADD_PRODUCT_ERROR,
   START_DOWNLOAD_PRODUCTS,
   DOWNLOAD_PRODUCTS_SUCCESS,
-  DOWNLOAD_PRODDUCTS_ERROR
+  DOWNLOAD_PRODDUCTS_ERROR,
+  GET_PRODUCT_DELETED,
+  PRODUCT_DELETED_SUCCESS,
+  PRODUCT_DELETED_ERROR
 } from "../types";
 
 import axiosClient from "../config/axios";
@@ -70,6 +73,38 @@ export const downloadSucces = products => ({
   payload: products
 });
 
-export const downloadFailure = error => ({
+export const downloadFailure = () => ({
   type: DOWNLOAD_PRODDUCTS_ERROR
+});
+
+//Function that delete an specific product
+export function deleteProductAction(id) {
+  return dispatch => {
+    dispatch(deleteProduct());
+
+    //Delete products from the API
+    axiosClient
+      .delete(`/books/${id}`)
+      .then(response => {
+        console.log(response);
+        dispatch(deleteProductSuccess(id));
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(deleteProductError());
+      });
+  };
+}
+
+export const deleteProduct = () => ({
+  type: GET_PRODUCT_DELETED
+});
+
+export const deleteProductSuccess = id => ({
+  type: PRODUCT_DELETED_SUCCESS,
+  payload: id
+});
+
+export const deleteProductError = () => ({
+  type: PRODUCT_DELETED_ERROR
 });
