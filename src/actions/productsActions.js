@@ -15,7 +15,7 @@ import {
   UPDATE_PRODUCT_SUCCESSS,
   UPDATE_PRODUCT_ERROR
 } from "../types";
-
+import Swal from "sweetalert2";
 import axiosClient from "../config/axios";
 
 // Create new product - main function
@@ -158,6 +158,7 @@ export function updateProductAction(product) {
       .then(response => {
         console.log(response);
         dispatch(updateProductSuccess(response.data));
+        Swal.fire("Saved!", "Product updated successfully", "success");
       })
       .catch(error => {
         console.log(error);

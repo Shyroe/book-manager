@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import Swal from "sweetalert2";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +7,13 @@ import {
   editProductAction,
   updateProductAction
 } from "../actions/productsActions";
+import {
+  validateFormAction,
+  validationSuccess,
+  validationError
+} from "../actions/actionsValidation";
 
-const EditProduct = ({ match }) => {
+const EditProduct = ({ match, history }) => {
   // Create the refs is a good idea when is editing
   const nameRef = useRef("");
   const priceRef = useRef("");
@@ -26,6 +32,9 @@ const EditProduct = ({ match }) => {
   // Access to our global state
   const product = useSelector(state => state.products.product);
   const error = useSelector(state => state.products.error);
+  const formValidation = () => dispatch(validateFormAction());
+  const successValidation = () => dispatch(validationSuccess());
+  const failureValidation = () => dispatch(validationError());
 
   // This will be show while the API is loading
   if (!product) return "Loading ...";
@@ -33,17 +42,23 @@ const EditProduct = ({ match }) => {
   const handleUpdateProduct = e => {
     e.preventDefault();
     // Insert validation in the form
-
+    formValidation();
+    if (
+      nameRef.current.value.trim() === "" ||
+      priceRef.current.value.trim() === ""
+    ) {
+      failureValidation();
+      return;
+    }
+    successValidation();
     productUpdated({
       id,
       name: nameRef.current.value,
       price: priceRef.current.value
     });
-    // Find an error
-
-    // Save the changes
-
+    Swal.fire("Saved!", "Product updated successfully", "success");
     // Redirect
+    history.push(`/`);
   };
 
   return (
