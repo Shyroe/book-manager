@@ -10,7 +10,10 @@ import {
   PRODUCT_DELETED_ERROR,
   GET_PRODUCT_EDIT,
   PRODUCT_EDIT_SUCCESS,
-  PRODUCT_EDIT_ERROR
+  PRODUCT_EDIT_ERROR,
+  START_PRODUCT_UPDATE,
+  UPDATE_PRODUCT_SUCCESSS,
+  UPDATE_PRODUCT_ERROR
 } from "../types";
 
 // Every reducer has their own state
@@ -91,6 +94,26 @@ export default function(state = initialState, action) {
         product: action.payload
       };
     case PRODUCT_EDIT_ERROR:
+      return {
+        ...state,
+        error: true
+      };
+    case START_PRODUCT_UPDATE:
+      return {
+        ...state,
+        error: null
+      };
+    case UPDATE_PRODUCT_SUCCESSS:
+      return {
+        ...state,
+        error: null,
+        products: state.products.map(product =>
+          product.id === action.payload.id
+            ? (product = action.payload)
+            : product
+        )
+      };
+    case UPDATE_PRODUCT_ERROR:
       return {
         ...state,
         error: true

@@ -1,12 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { editProductAction } from "../actions/productsActions";
+import {
+  editProductAction,
+  updateProductAction
+} from "../actions/productsActions";
 
 const EditProduct = ({ match }) => {
+  // Create the refs is a good idea when is editing
+  const nameRef = useRef("");
+  const priceRef = useRef("");
+
   // Alias to use the function dispatch to execute the main action of edit
   const dispatch = useDispatch();
+  const productUpdated = product => dispatch(updateProductAction(product));
 
   // Get the ID of the product that will be edited
   const { id } = match.params;
@@ -22,6 +30,22 @@ const EditProduct = ({ match }) => {
   // This will be show while the API is loading
   if (!product) return "Loading ...";
 
+  const handleUpdateProduct = e => {
+    e.preventDefault();
+    // Insert validation in the form
+
+    productUpdated({
+      id,
+      name: nameRef.current.value,
+      price: priceRef.current.value
+    });
+    // Find an error
+
+    // Save the changes
+
+    // Redirect
+  };
+
   return (
     <>
       {error ? (
@@ -34,7 +58,7 @@ const EditProduct = ({ match }) => {
             <div className="card">
               <div className="card-body">
                 <h2 className="text-center">Edit Product</h2>
-                <form>
+                <form onSubmit={handleUpdateProduct}>
                   <div className="form-group">
                     <label>Enter Book Name</label>
                     <input
@@ -42,6 +66,7 @@ const EditProduct = ({ match }) => {
                       className="form-control"
                       placeholder="Title: La ciudad y los perros"
                       defaultValue={product.name}
+                      ref={nameRef}
                     />
                   </div>
                   <div className="form-group">
@@ -51,6 +76,7 @@ const EditProduct = ({ match }) => {
                       className="form-control"
                       placeholder="Price: 30$"
                       defaultValue={product.price}
+                      ref={priceRef}
                     />
                   </div>
 

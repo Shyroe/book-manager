@@ -10,7 +10,10 @@ import {
   PRODUCT_DELETED_ERROR,
   GET_PRODUCT_EDIT,
   PRODUCT_EDIT_SUCCESS,
-  PRODUCT_EDIT_ERROR
+  PRODUCT_EDIT_ERROR,
+  START_PRODUCT_UPDATE,
+  UPDATE_PRODUCT_SUCCESSS,
+  UPDATE_PRODUCT_ERROR
 } from "../types";
 
 import axiosClient from "../config/axios";
@@ -141,5 +144,37 @@ export const editProductSuccess = product => ({
 });
 
 export const editProductFailure = () => ({
-  type: PRODUCT_DELETED_ERROR
+  type: PRODUCT_EDIT_ERROR
+});
+
+//Change a product in the API and the global state
+export function updateProductAction(product) {
+  return dispatch => {
+    dispatch(startUpdateProduct());
+
+    // Update the product in the API
+    axiosClient
+      .put(`/books/${product.id}`, product)
+      .then(response => {
+        console.log(response);
+        dispatch(updateProductSuccess(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(updateProductFailure());
+      });
+  };
+}
+
+export const startUpdateProduct = () => ({
+  type: START_PRODUCT_UPDATE
+});
+
+export const updateProductSuccess = product => ({
+  type: UPDATE_PRODUCT_SUCCESSS,
+  payload: product
+});
+
+export const updateProductFailure = () => ({
+  type: UPDATE_PRODUCT_ERROR
 });

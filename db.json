@@ -12,8 +12,8 @@
     },
     {
       "id": 3,
-      "name": "The Joker",
-      "price": 40
+      "name": "The Joker API",
+      "price": "80"
     },
     {
       "name": "Design Databases",
