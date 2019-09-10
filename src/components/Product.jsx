@@ -37,10 +37,7 @@ const Product = ({ product }) => {
         <span className="font-weight-bold">{product.price}</span>
       </td>
       <td className="acciones">
-        <Link
-          to={`/products/edit/${product.id}`}
-          className="btn btn-primary mr-2"
-        >
+        <Link to={`/products/edit/${product.id}`} className="btn btn-info mr-2">
           Edit
         </Link>
 

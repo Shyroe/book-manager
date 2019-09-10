@@ -11,7 +11,7 @@ const Header = () => {
 
         <Link
           to={"/products/new"}
-          className="btn btn-danger nuevo-post d-block d-md-inline-block"
+          className="btn btn-dark nuevo-post d-block d-md-inline-block"
         >
           Add Products &#43;
         </Link>

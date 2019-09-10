@@ -74,7 +74,7 @@ const NewProduct = ({ history }) => {
                 type="submit"
                 className="btn btn-primary font-weight-bold text-uppercase d-block w-100"
               >
-                Add
+                Add New
               </button>
             </form>
 
