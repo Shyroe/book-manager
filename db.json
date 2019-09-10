@@ -1,0 +1,29 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "name": "Learning React-Redux",
+      "price": 30
+    },
+    {
+      "id": 2,
+      "name": "React Back to Front",
+      "price": 59
+    },
+    {
+      "id": 3,
+      "name": "The Joker",
+      "price": 40
+    },
+    {
+      "name": "Design Databases",
+      "price": "45",
+      "id": 5
+    },
+    {
+      "name": "Learning Ruby on Rails",
+      "price": "49",
+      "id": 6
+    }
+  ]
+}
