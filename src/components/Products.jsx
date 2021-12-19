@@ -12,7 +12,7 @@ const Products = () => {
     //Call the function to start downloading the products
     const downloadProducts = () => dispatch(getProductsAction());
     downloadProducts();
-  }, []);
+  }, [dispatch]);
 
   //Access to the state
   const loading = useSelector(state => state.products.loading);

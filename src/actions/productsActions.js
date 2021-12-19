@@ -60,7 +60,7 @@ export function getProductsAction() {
 
     //Ask in the API
     axiosClient
-      .get("./books")
+      .get("/books")
       .then(response => {
         dispatch(downloadSucces(response.data));
       })
